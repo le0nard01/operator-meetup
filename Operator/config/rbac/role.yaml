@@ -1,0 +1,63 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete // Permissões para os Jobs
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - node
+  verbs:
+  - get
+  - list
+  - patch // Permissões os Nodes
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - // Permissões para os Pods
+  - get
+  - list
+- apiGroups:
+  - performance.oste.com.br
+  resources:
+  - testers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - performance.oste.com.br
+  resources:
+  - testers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - performance.oste.com.br
+  resources:
+  - testers/status
+  verbs:
+  - get
+  - patch
+  - update

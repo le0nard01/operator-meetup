@@ -1,0 +1,17 @@
+apiVersion: performance.oste.com.br/v1alpha1
+kind: Tester
+metadata:
+  labels:
+    app.kubernetes.io/name: tester
+    app.kubernetes.io/instance: tester-sample
+    app.kubernetes.io/part-of: operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: operator
+  name: tester-sample
+spec:
+  tests: 
+    iopsTest:
+      enabled: true
+      readThreshold: 20000
+      writeThreshold: 10000
+  ignoreControlPlane: true
