@@ -72,8 +72,8 @@ func (r *TesterReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctr
 			logger.Info("Recurso não encontrado")
 			return ctrl.Result{}, nil
 		}
-		// Error reading the object - requeue the request.
-		logger.Error(err, "Failed to get Tester")
+		// Erro ao ler objeto.
+		logger.Error(err, "Falha ao captar recurso Tester")
 		return ctrl.Result{}, err
 	}
 
@@ -183,11 +183,11 @@ func (r *TesterReconciler) jobCreate(jobName types.NamespacedName, nodeName stri
 func (r *TesterReconciler) waitJob(ctx context.Context, job *batchv1.Job, timeout time.Duration) (bool, error) {
 	jobKey := client.ObjectKeyFromObject(job)
 
-	// Aguarda a criação do objeto job
+	// Aguarda a criação do objeto job.
 	if err := r.Get(ctx, jobKey, job); err != nil {
 		return false, err
 	}
-	// Aguarda o pod do job ser criado
+	// Aguarda o pod do job ser criado.
 	podList := &corev1.PodList{}
 	err := r.List(ctx, podList, client.InNamespace(job.Namespace), client.MatchingLabels{"job-name": job.Name})
 	if err != nil {
@@ -201,7 +201,7 @@ func (r *TesterReconciler) waitJob(ctx context.Context, job *batchv1.Job, timeou
 		}
 	}
 
-	// Aguarda a conclusão do job ou o tempo limite
+	// Aguarda a conclusão do job ou o tempo limite.
 	deadline := time.Now().Add(timeout)
 	for {
 		if time.Now().After(deadline) {
@@ -234,11 +234,11 @@ func (r *TesterReconciler) unschedulableNode(ctx context.Context, nodeName strin
 		return err
 	}
 
-	// Verifica se o nó já está marcado como ScheduleDisabled
+	// Verifica se o nó já está marcado como ScheduleDisabled.
 	if node.Spec.Unschedulable {
 		return nil
 	}
-	// Adiciona a taint ao nó para marcar como ScheduleDisabled
+	// Adiciona a taint ao nó para marcar como ScheduleDisabled.
 	node.Spec.Unschedulable = true
 	logger.Info("Debug 4")
 	err = r.Update(ctx, node)
