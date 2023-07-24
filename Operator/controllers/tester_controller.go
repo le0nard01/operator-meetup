@@ -240,7 +240,6 @@ func (r *TesterReconciler) unschedulableNode(ctx context.Context, nodeName strin
 	}
 	// Adiciona a taint ao nó para marcar como ScheduleDisabled.
 	node.Spec.Unschedulable = true
-	logger.Info("Debug 4")
 	err = r.Update(ctx, node)
 	if err != nil {
 		return err
